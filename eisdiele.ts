@@ -6,7 +6,6 @@ namespace EIA2_Endabgabe {
     window.addEventListener("load", handleLoad)
 
     // Arrays zur Speicherung von Stühlen, Tischen, Bestellungen und beweglichen Objekten
-    export let moveables: Moveable[] = [];
     export let chairs: Chair[] = [];    
     export let tables: Table[] = [];
     export let order: Order[] = [];
