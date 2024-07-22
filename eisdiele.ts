@@ -1,69 +1,79 @@
 namespace EIA2_Endabgabe {    
 
+    // Globale Variable für den Canvas Rendering Context
     export let crc2: CanvasRenderingContext2D; 
+    // Fügt einen Event-Listener hinzu, der die Funktion `handleLoad` aufruft, wenn die Seite geladen wird
     window.addEventListener("load", handleLoad)
 
+    // Arrays zur Speicherung von Stühlen, Tischen, Bestellungen und beweglichen Objekten
     export let moveables: Moveable[] = [];
     export let chairs: Chair[] = [];    
     export let tables: Table[] = [];
     export let order: Order[] = [];
 
-    let imgData: ImageData;
-
+    // Funktion, die beim Laden der Seite aufgerufen wird
     export function handleLoad() {
+
+        // Sucht das Canvas-Element im DOM
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
+
+        // Überprüft, ob das Canvas-Element vorhanden ist
         if (!canvas) {
             console.error("Canvas not found!");
             return;
         }
+
+        // Ruft den 2D-Zeichen-Kontext des Canvas ab
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
 
+        // Setzt die Canvas-Größe auf die Fenstergröße
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
+        // Zeichnet Hintergrund und verschiedene Boxen
         drawBackground();
         drawBoxTablet();
         drawFlavor();
         drawTopping();
         drawWaffle();
         
-        imgData = crc2.getImageData(0, 0, crc2.canvas.width, crc2.canvas.height);
-
+        // Erstellt Stühle und fügt sie zum Stuhl-Array hinzu
         chairs.push(new Chair(80));
-        chairs.push(new Chair(990));
-        chairs.push(new Chair(1500));
+        chairs.push(new Chair(950));
+        chairs.push(new Chair(1400));
 
+        // Erstellt Tische und fügt sie zum Tisch-Array hinzu
         tables.push(new Table(345));
         tables.push(new Table(1200));
         tables.push(new Table(1680));
 
+        // Erstellt Bestellungen und fügt sie zum Bestell-Array hinzu
         order.push(new Order(75));
         order.push(new Order(940));
         order.push(new Order(1410));
 
+        // Zeichnet alle Stühle, Tische und Bestellungen
         for (let chair of chairs) {
             chair.drawChair();
           }
-
         for (let table of tables) {
             table.drawTable();
         }
-
         for (let orders of order) {
             orders.drawOrder();
         }
         
         
 
-        // Add the event listener only after the canvas is initialized
+        // Fügt einen Event-Listener für Klicks auf das Canvas hinzu
         canvas.addEventListener("click", handleCustomerClick);
     }
 
-    //DRAW-FUNCTIONS
+    // Funktion zum Zeichnen des Hintergrunds
 
     function drawBackground() {
         
-        // WALL
+        // Wand
 
         crc2.save();
         crc2.beginPath();
@@ -87,11 +97,11 @@ namespace EIA2_Endabgabe {
         crc2.closePath();
         crc2.restore();
     
-        // DOOR 
+        // Tür 
 
         crc2.save();
         crc2.beginPath();
-        crc2.fillStyle = "#C3D8E6";
+        crc2.fillStyle = "#6B502C";
         crc2.beginPath();
         crc2.rect(500, 20, 400, 400);
         crc2.fill();
@@ -106,7 +116,7 @@ namespace EIA2_Endabgabe {
         crc2.closePath();
         crc2.restore();
     
-        // FLOOR
+        // Flur
 
         crc2.save();
         crc2.beginPath();
@@ -117,7 +127,7 @@ namespace EIA2_Endabgabe {
         crc2.fill();
         crc2.restore();
 
-        // COUNTER 
+        // Theke 
 
         crc2.save();
         crc2.beginPath();
@@ -132,7 +142,7 @@ namespace EIA2_Endabgabe {
         crc2.closePath();
         crc2.restore();
 
-        // BOX TOPPING
+        // Boxen für Toppings
         
         crc2.save();
         crc2.beginPath();
@@ -149,7 +159,7 @@ namespace EIA2_Endabgabe {
         crc2.closePath();
         crc2.restore();
 
-        // BOX FLAVOR 
+        // Boxen für Geschmacksrichtungen 
 
         crc2.save();
         crc2.beginPath();

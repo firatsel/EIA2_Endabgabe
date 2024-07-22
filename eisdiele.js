@@ -1,36 +1,46 @@
 "use strict";
 var EIA2_Endabgabe;
 (function (EIA2_Endabgabe) {
+    // Fügt einen Event-Listener hinzu, der die Funktion `handleLoad` aufruft, wenn die Seite geladen wird
     window.addEventListener("load", handleLoad);
+    // Arrays zur Speicherung von Stühlen, Tischen, Bestellungen und beweglichen Objekten
     EIA2_Endabgabe.moveables = [];
     EIA2_Endabgabe.chairs = [];
     EIA2_Endabgabe.tables = [];
     EIA2_Endabgabe.order = [];
-    let imgData;
+    // Funktion, die beim Laden der Seite aufgerufen wird
     function handleLoad() {
+        // Sucht das Canvas-Element im DOM
         let canvas = document.querySelector("canvas");
+        // Überprüft, ob das Canvas-Element vorhanden ist
         if (!canvas) {
             console.error("Canvas not found!");
             return;
         }
+        // Ruft den 2D-Zeichen-Kontext des Canvas ab
         EIA2_Endabgabe.crc2 = canvas.getContext("2d");
+        // Setzt die Canvas-Größe auf die Fenstergröße
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        // Zeichnet Hintergrund und verschiedene Boxen
         drawBackground();
         drawBoxTablet();
         EIA2_Endabgabe.drawFlavor();
         EIA2_Endabgabe.drawTopping();
         EIA2_Endabgabe.drawWaffle();
-        imgData = EIA2_Endabgabe.crc2.getImageData(0, 0, EIA2_Endabgabe.crc2.canvas.width, EIA2_Endabgabe.crc2.canvas.height);
+        // Erstellt Stühle und fügt sie zum Stuhl-Array hinzu
         EIA2_Endabgabe.chairs.push(new EIA2_Endabgabe.Chair(80));
-        EIA2_Endabgabe.chairs.push(new EIA2_Endabgabe.Chair(990));
-        EIA2_Endabgabe.chairs.push(new EIA2_Endabgabe.Chair(1500));
+        EIA2_Endabgabe.chairs.push(new EIA2_Endabgabe.Chair(950));
+        EIA2_Endabgabe.chairs.push(new EIA2_Endabgabe.Chair(1400));
+        // Erstellt Tische und fügt sie zum Tisch-Array hinzu
         EIA2_Endabgabe.tables.push(new EIA2_Endabgabe.Table(345));
         EIA2_Endabgabe.tables.push(new EIA2_Endabgabe.Table(1200));
         EIA2_Endabgabe.tables.push(new EIA2_Endabgabe.Table(1680));
+        // Erstellt Bestellungen und fügt sie zum Bestell-Array hinzu
         EIA2_Endabgabe.order.push(new EIA2_Endabgabe.Order(75));
         EIA2_Endabgabe.order.push(new EIA2_Endabgabe.Order(940));
         EIA2_Endabgabe.order.push(new EIA2_Endabgabe.Order(1410));
+        // Zeichnet alle Stühle, Tische und Bestellungen
         for (let chair of EIA2_Endabgabe.chairs) {
             chair.drawChair();
         }
@@ -40,13 +50,13 @@ var EIA2_Endabgabe;
         for (let orders of EIA2_Endabgabe.order) {
             orders.drawOrder();
         }
-        // Add the event listener only after the canvas is initialized
+        // Fügt einen Event-Listener für Klicks auf das Canvas hinzu
         canvas.addEventListener("click", EIA2_Endabgabe.handleCustomerClick);
     }
     EIA2_Endabgabe.handleLoad = handleLoad;
-    //DRAW-FUNCTIONS
+    // Funktion zum Zeichnen des Hintergrunds
     function drawBackground() {
-        // WALL
+        // Wand
         EIA2_Endabgabe.crc2.save();
         EIA2_Endabgabe.crc2.beginPath();
         EIA2_Endabgabe.crc2.fillStyle = "#6DC9B2";
@@ -67,10 +77,10 @@ var EIA2_Endabgabe;
         EIA2_Endabgabe.crc2.fill();
         EIA2_Endabgabe.crc2.closePath();
         EIA2_Endabgabe.crc2.restore();
-        // DOOR 
+        // Tür 
         EIA2_Endabgabe.crc2.save();
         EIA2_Endabgabe.crc2.beginPath();
-        EIA2_Endabgabe.crc2.fillStyle = "#C3D8E6";
+        EIA2_Endabgabe.crc2.fillStyle = "#6B502C";
         EIA2_Endabgabe.crc2.beginPath();
         EIA2_Endabgabe.crc2.rect(500, 20, 400, 400);
         EIA2_Endabgabe.crc2.fill();
@@ -84,7 +94,7 @@ var EIA2_Endabgabe;
         EIA2_Endabgabe.crc2.fill();
         EIA2_Endabgabe.crc2.closePath();
         EIA2_Endabgabe.crc2.restore();
-        // FLOOR
+        // Flur
         EIA2_Endabgabe.crc2.save();
         EIA2_Endabgabe.crc2.beginPath();
         EIA2_Endabgabe.crc2.fillStyle = "#CBCCCC";
@@ -93,7 +103,7 @@ var EIA2_Endabgabe;
         EIA2_Endabgabe.crc2.closePath();
         EIA2_Endabgabe.crc2.fill();
         EIA2_Endabgabe.crc2.restore();
-        // COUNTER 
+        // Theke 
         EIA2_Endabgabe.crc2.save();
         EIA2_Endabgabe.crc2.beginPath();
         EIA2_Endabgabe.crc2.fillStyle = "#BB8D44";
@@ -106,7 +116,7 @@ var EIA2_Endabgabe;
         EIA2_Endabgabe.crc2.fill();
         EIA2_Endabgabe.crc2.closePath();
         EIA2_Endabgabe.crc2.restore();
-        // BOX TOPPING
+        // Boxen für Toppings
         EIA2_Endabgabe.crc2.save();
         EIA2_Endabgabe.crc2.beginPath();
         EIA2_Endabgabe.crc2.fillStyle = "#9E5524";
@@ -119,7 +129,7 @@ var EIA2_Endabgabe;
         EIA2_Endabgabe.crc2.fill();
         EIA2_Endabgabe.crc2.closePath();
         EIA2_Endabgabe.crc2.restore();
-        // BOX FLAVOR 
+        // Boxen für Geschmacksrichtungen 
         EIA2_Endabgabe.crc2.save();
         EIA2_Endabgabe.crc2.beginPath();
         EIA2_Endabgabe.crc2.fillStyle = "#9E5524";

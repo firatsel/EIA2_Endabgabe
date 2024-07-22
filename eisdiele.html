@@ -13,26 +13,46 @@
     <script src="customer.js"></script>
     <script src="assortment.js"></script>
 </head>
+<style>
+textarea {
+    resize: none;
+   }
+</style>
 <body>
     <div id="feld01">
-        <textarea name="box1" id="box1" style="position: absolute; z-index: 1; left: 90px; top: 60px; width:140px; height:30px; background-color: white; font-size: 18px;"></textarea>
-        <textarea name="box2" id="box2" style="position: absolute; z-index: 1; left: 90px; top: 100px; width:140px; height:30px; background-color: white; font-size: 18px"></textarea>
-        <textarea name="mood1" id="mood1" style="position: absolute; z-index: 1; left: 90px; top: 370px; width:140px; height:30px; background-color: white; font-size: 18px"></textarea>
+        <textarea name="box1" id="box1" readonly style="position: absolute; z-index: 1; left: 88px; top: 55px; width:100px; height:20px; background-color: white; font-size: 17px;"></textarea>
+        <textarea name="box2" id="box2" readonly style="position: absolute; z-index: 1; left: 88px; top: 85px; width:100px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="box3" id="box3" readonly style="position: absolute; z-index: 1; left: 88px; top: 115px; width:100px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="box1_anzahl" id="box1_anzahl" readonly style="position: absolute; z-index: 1; left: 198px; top: 55px; width:35px; height:20px; background-color: white; font-size: 17px;"></textarea>
+        <textarea name="box2_anzahl" id="box2_anzahl" readonly style="position: absolute; z-index: 1; left: 198px; top: 85px; width:35px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="mood1" id="mood1" readonly style="position: absolute; z-index: 1; left: 90px; top: 370px; width:140px; height:30px; background-color: white; font-size: 20px"></textarea>
     </div>
     <div id="feld02">
-        <textarea name="box3" id="box3" style="position: absolute; z-index: 1; left: 955px; top: 60px; width:140px; height:30px; background-color: white; font-size: 18px;"></textarea>
-        <textarea name="box4" id="box4" style="position: absolute; z-index: 1; left: 955px; top: 100px; width:140px; height:30px; background-color: white; font-size: 18px"></textarea>
-        <textarea name="mood2" id="mood2" style="position: absolute; z-index: 1; left: 1000px; top: 370px; width:140px; height:30px; background-color: white; font-size: 18px"></textarea>
+        <textarea name="box4" id="box4" readonly style="position: absolute; z-index: 1; left: 953px; top: 55px; width:100px; height:20px; background-color: white; font-size: 17px;"></textarea>
+        <textarea name="box5" id="box5" readonly style="position: absolute; z-index: 1; left: 953px; top: 85px; width:100px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="box6" id="box6" readonly style="position: absolute; z-index: 1; left: 953px; top: 115px; width:100px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="box4_anzahl" id="box4_anzahl" readonly style="position: absolute; z-index: 1; left: 1063px; top: 55px; width:35px; height:20px; background-color: white; font-size: 17px;"></textarea>
+        <textarea name="box5_anzahl" id="box5_anzahl" readonly style="position: absolute; z-index: 1; left: 1063px; top: 85px; width:35px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="mood2" id="mood2" readonly style="position: absolute; z-index: 1; left: 960px; top: 370px; width:140px; height:30px; background-color: white; font-size: 20px"></textarea>
     </div>
     <div id="feld03">
-        <textarea name="box5" id="box5" style="position: absolute; z-index: 1; left: 1425px; top: 60px; width:140px; height:30px; background-color: white; font-size: 18px;"></textarea>
-        <textarea name="box6" id="box6" style="position: absolute; z-index: 1; left: 1425px; top: 100px; width:140px; height:30px; background-color: white; font-size: 18px"></textarea>
-        <textarea name="mood3" id="mood3" style="position: absolute; z-index: 1; left: 1400px; top: 370px; width:140px; height:30px; background-color: white; font-size: 18px"></textarea>
+        <textarea name="box7" id="box7" readonly style="position: absolute; z-index: 1; left: 1423px; top: 55px; width: 100px; height: 20px;; background-color: white; font-size: 17px;"></textarea>
+        <textarea name="box8" id="box8" readonly style="position: absolute; z-index: 1; left: 1423px; top: 85px; width:100px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="box9" id="box9" readonly style="position: absolute; z-index: 1; left: 1423px; top: 115px; width:100px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="box7_anzahl" id="box7_anzahl" readonly style="position: absolute; z-index: 1; left: 1533px; top: 55px; width:35px; height:20px; background-color: white; font-size: 17px;"></textarea>
+        <textarea name="box8_anzahl" id="box8_anzahl" readonly style="position: absolute; z-index: 1; left: 1533px; top: 85px; width:35px; height:20px; background-color: white; font-size: 17px"></textarea>
+        <textarea name="mood3" id="mood3" readonly style="position: absolute; z-index: 1; left: 1410px; top: 370px; width:140px; height:30px; background-color: white; font-size: 20px"></textarea>
     </div>
     <div id="feld04">
-        <textarea name="box7" id="box7" style="position: absolute; z-index: 1; left: 400px; top: 700px; width:140px; height:30px; background-color: white; font-size: 18px;"></textarea>
-        <textarea name="box8" id="box8" style="position: absolute; z-index: 1; left: 400px; top: 750px; width:140px; height:30px; background-color: white; font-size: 18px"></textarea>
-        <textarea name="earning" id="earning" style="position: absolute; z-index: 1; left: 560px; top: 700px; width:140px; height:30px; background-color: white; font-size: 18px;"></textarea>
+        <textarea name="box10" id="box10" readonly style="position: absolute; z-index: 1; left: 430px; top: 695px; width:160px; height:30px; background-color: white; font-size: 18px;"></textarea>
+        <textarea name="box11" id="box11" readonly style="position: absolute; z-index: 1; left: 430px; top: 740px; width:160px; height:30px; background-color: white; font-size: 18px"></textarea>
+        <textarea name="box12" id="box12" readonly style="position: absolute; z-index: 1; left: 430px; top: 785px; width:160px; height:30px; background-color: white; font-size: 18px"></textarea>
+        <input name="box10_anzahl" id="box10_anzahl" type="number" placeholder="0" min="0" max="3" style="position: absolute; z-index: 1; left: 610px; top: 695px; width:50px; height:30px; background-color: white; font-size: 18px;"></input>
+        <input name="box11_anzahl" id="box11_anzahl" type="number" placeholder="0" min="0" max="3" style="position: absolute; z-index: 1; left: 610px; top: 740px; width:50px; height:30px; background-color: white; font-size: 18px"></input>
+        <textarea name="earning" id="earning" type="number" readonly style="position: absolute; z-index: 1; left: 50px; top: 695px; width:250px; height:30px; background-color: white; font-size: 18px;">0</textarea>
+        <textarea name="earningtext" id="earningtext" readonly style="position: absolute; z-index: 1; left: 50px; top: 650px; width:250px; height:30px; background-color: white; font-size: 20px; font-weight: bold;">Einnahmen</textarea>
+        <textarea name="t" id="t" readonly style="position: absolute; z-index: 1; left: 50px; top: 505px; width:250px; height:50px; background-color: white; font-size: 20px; font-weight: bold;">Verlorene Kunden durch Wartezeit</textarea>
+        <textarea name="lost" id="lost" placeholder="0" readonly style="position: absolute; z-index: 1; left: 50px; top: 570px; width:250px; height:30px; background-color: white; font-size: 18px;"></textarea>
     </div>
 
     <button name="button1" id="button1" style="position: absolute; z-index: 1; left: 1610px; top: 510px; width:200px; height:80px; background-color: #9E5524; font-size: 30px; font-style: white;">1</button>
