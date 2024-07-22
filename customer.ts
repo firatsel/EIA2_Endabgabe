@@ -1,12 +1,10 @@
 namespace EIA2_Endabgabe {
 
-    // Interface für Position mit x- und y-Koordinaten
     export interface Position {
         x: number;
         y: number;
     }
 
-    // Interface für Kunden mit Position, Radius und optionalen Timer-IDs
     export interface Customer {
         position: Position;
         radius: number;
@@ -15,23 +13,23 @@ namespace EIA2_Endabgabe {
         removaltimerId_essen?: number; // Timer für das Essen
     }
 
-    // Liste, um alle Kunden zu speichern
+    // Kundenspeicherung
     export let customers: Customer[] = [];
 
-    // Definiere Stuhlpositionen auf der Leinwand
+    // Stuhlpositionen auf der Leinwand
     export let chairPositions: Position[] = [
         { x: 150, y: 220 },
         { x: 1020, y: 220 },
         { x: 1470, y: 220 }
     ];
 
-    // Überprüft, ob sich zwei Kreise überlappen
+    // überprüft, ob sich zwei Kreise überlappen
     function doCirclesOverlap(x1: number, y1: number, r1: number, x2: number, y2: number, r2: number): boolean {
         const dist = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
         return dist < r1 + r2;
     }
 
-    // Gibt eine zufällige Position für einen neuen Kunden zurück, wenn sie gültig ist
+    // zufällige Position für einen neuen Kunden, Funktion, damit die sich nicht überlappen
     export function getRandomCustomerPosition(): Position | null {
         const maxAttempts = 100;
         let attempts = 0;
@@ -56,10 +54,10 @@ namespace EIA2_Endabgabe {
             attempts++;
         }
 
-        return null; // Keine gültige Position gefunden
+        return null;
     }
 
-    // Zeichnet einen Kunden auf der Leinwand
+    // Kunde (Mike W.) wird gezeichnet
     export function drawCustomer(customer: Customer) {
         const { x, y } = customer.position;
         crc2.save();
@@ -89,26 +87,26 @@ namespace EIA2_Endabgabe {
         crc2.restore();
     }
 
-    // Erzeugt einen neuen Kunden alle 2 Sekunden
+    // neuer Kunde (alle 5 Sekunden)
     export function spawnCustomer() {
         setInterval(() => {
             let position = getRandomCustomerPosition();
             if (position) {
-                let customer: Customer = { position, radius: 60 }; // Radius des Kunden
+                let customer: Customer = { position, radius: 60 };
                 customers.push(customer);
                 drawCustomer(customer);
                 
-                // Timer zum Entfernen des Kunden nach 15 Sekunden
+                // Kunde wird nach 15 Sekunden entfernt
                 customer.timerId = window.setTimeout(() => {
                     removeCustomer(customer);
                 }, 15000);
             } else {
                 console.log("Keine gültige Position für einen neuen Kunden gefunden.");
             }
-        }, 5000); // Alle 5 Sekunden
+        }, 5000); // 5 Sekunden
     }
 
-    // Verarbeitet einen Klick auf einen Kunden
+    // Klick auf den Kunden
     export function handleCustomerClick(event: MouseEvent) {
         const { offsetX, offsetY } = event;
         for (let customer of customers) {
@@ -118,22 +116,22 @@ namespace EIA2_Endabgabe {
                 if (newPosition) {
                     clearTimeout(customer.timerId); // Timer für die Entfernung löschen
                     moveCustomer(customer, newPosition);
-                    setCurrentCustomer(customer); // Setze den aktuellen Kunden
-                    spawnOrder(newPosition); // Bestellvorgang starten
+                    setCurrentCustomer(customer); // aktueller Kunde
+                    spawnOrder(newPosition); // Bestellung wird angezeigt
                 }
                 break;
             }
         }
     }
 
-    // Gibt die Farbe eines Pixels an der gegebenen Position zurück
+    // gibt die Farbe eines Pixels an der gegebenen Position zurück
     function getPixelColor(x: number, y: number): string {
         const pixel = crc2.getImageData(x, y, 1, 1).data;
         const rgb = `#${((1 << 24) + (pixel[0] << 16) + (pixel[1] << 8) + pixel[2]).toString(16).slice(1).toUpperCase()}`;
         return rgb;
     }
 
-    // Gibt eine freie Stuhlposition zurück, falls vorhanden
+    // freie Stuhlposition, falls vorhanden
     export function getFreeChairPosition(): Position | null {
         for (let pos of chairPositions) {
             const chairColor = getPixelColor(pos.x, pos.y);
@@ -141,17 +139,17 @@ namespace EIA2_Endabgabe {
                 return pos;
             }
         }
-        return null; // Kein freier Stuhl gefunden
+        return null; // kein freier Stuhl gefunden
     }
 
-    // Bewegt einen Kunden zu einer neuen Position
+    // Kunden wird zur neuen Position bewegt
     export function moveCustomer(customer: Customer, newPosition: Position) {
-        // Alte Position des Kunden auf Hintergrundfarbe setzen
+        // alte Position des Kunden auf Hintergrundfarbe gesetzt
         if (customer.removaltimerId) {
             clearTimeout(customer.removaltimerId);
         }
         crc2.save();
-        crc2.fillStyle = "#6B502C"; // Hintergrundfarbe
+        crc2.fillStyle = "#6B502C"; 
         crc2.beginPath();
         crc2.arc(customer.position.x, customer.position.y, customer.radius + 1, 0, 2 * Math.PI);
         crc2.fill();
@@ -159,12 +157,12 @@ namespace EIA2_Endabgabe {
 
         customers = customers.filter(c => c !== customer);
 
-        // Kundenposition aktualisieren und neu zeichnen
+        // Kundenposition wird aktualisiert und neu gezeichnet
         customer.position = newPosition;
         drawCustomer(customer);
         customer.removaltimerId_essen = window.setTimeout(() => {
             crc2.save();
-            crc2.fillStyle = "#FF0000"; // Rot
+            crc2.fillStyle = "#FF0000";
             crc2.beginPath();
             crc2.arc(customer.position.x, customer.position.y, customer.radius - 5, 0, 2 * Math.PI);
             crc2.fill();
@@ -188,10 +186,10 @@ namespace EIA2_Endabgabe {
         }, 10000); // 10 Sekunden
     }
 
-    // Entfernt einen Kunden und färbt ihn rot
+    // Kunde wird entfernt + rotes Gesicht
     export function removeCustomer(customer: Customer) {
         crc2.save();
-        crc2.fillStyle = "#FF0000"; // Rot
+        crc2.fillStyle = "#FF0000"; 
         crc2.beginPath();
         crc2.arc(customer.position.x, customer.position.y, customer.radius - 5, 0, 2 * Math.PI);
         crc2.fill();
@@ -213,27 +211,27 @@ namespace EIA2_Endabgabe {
 
         crc2.restore();
     
-        // Entferne den Kunden nach 5 Sekunden
+        // Kunde wird nach 5 sek entfernt
         customer.removaltimerId = window.setTimeout(() => {
             crc2.save();
-            crc2.fillStyle = "#6B502C"; // Hintergrundfarbe
+            crc2.fillStyle = "#6B502C";
             crc2.beginPath();
             crc2.arc(customer.position.x, customer.position.y, customer.radius + 1, 0, 2 * Math.PI);
             crc2.fill();
             crc2.restore();
-            // Entferne den Kunden aus der Liste
+            // Kunde wird aus der Liste entfernt
             customers = customers.filter(c => c !== customer);
-            incrementLostCounter(); // Erhöhe den Zähler für verlorene Kunden
+            incrementLostCounter(); // Zähler für verlorene Kunden wird erhöht
         }, 5000); // 5 Sekunden
     }
 
-    // Erhöht den Zähler für verlorene Kunden
+    // Zähler für verlorene Kunden wird erhöht
     export function incrementLostCounter() {
         const lostTextarea = document.getElementById("lost") as HTMLTextAreaElement;
         let currentCount = parseInt(lostTextarea.value) || 0;
         lostTextarea.value = (currentCount + 1).toString();
     }
 
-    // Startet das regelmäßige Erscheinen der Kunden
+    // regelmäßige Kunden
     spawnCustomer();
 }

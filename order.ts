@@ -1,21 +1,19 @@
 namespace EIA2_Endabgabe {
 
-    // Klasse Order repräsentiert eine Bestellung und ihre Position auf der Leinwand
     export class Order {
-        positionX: number; // X-Position der Bestellung
+        positionX: number;
 
         constructor(_positionX: number) {
             this.positionX = _positionX;
         }
 
-        // Zeichnet die Bestellung auf der Leinwand
         drawOrder() {
             crc2.save();
             crc2.beginPath();
 
-            crc2.fillStyle = "#EBEBE4"; // Hintergrundfarbe der Bestellung
+            crc2.fillStyle = "#EBEBE4"; 
             crc2.beginPath();
-            crc2.rect(this.positionX, 40, 160, 100); // Rechteck für Bestellung
+            crc2.rect(this.positionX, 40, 160, 100);
             crc2.fill();
 
             crc2.closePath();
@@ -23,29 +21,31 @@ namespace EIA2_Endabgabe {
         }
     }
 
-    // Aktueller Kunde, der gerade bedient wird
+    // aktueller Kunde, der bedient wird
     let currentCustomer: Customer;
 
-    // Setzt den aktuellen Kunden
+    // aktueller Kunden
     export function setCurrentCustomer(customer: Customer) {
         currentCustomer = customer;
     }
 
-    // Gibt den aktuellen Kunden zurück
+    // gibt aktuellen Kunden zurück
     export function getCurrentCustomer(): Customer {
         return currentCustomer;
     }
 
-    // Erzeugt eine neue Bestellung und aktualisiert die Anzeige
+    // neue Bestellung wird erzeugt und Anzeige aktualisiert
     export function spawnOrder(newPosition: Position) {
-        // Auswahl von zwei zufälligen Geschmacksrichtungen und einem Topping
+        // Auswahl: drei Eissorten und zwei Toppings
         let flavor = ["Mango", "Erdbeere", "Schokolade"];
         let topping = ["Kirsche", "Streusel"];
         let [flavor1, flavor2] = flavor.sort(() => 0.5 - Math.random()).slice(0, 2);
 
-        // Behandelt die Bestellung je nach Position des Kunden
+
+        // Bestellung wird bearbeitet je nach Position/Stuhl des Kunden
+
         if (newPosition.x == 150) {
-            // Elementreferenzen für die erste Box
+            // Stuhl 1
             let textarea1 = document.getElementById('box1') as HTMLTextAreaElement;
             let textarea2 = document.getElementById('box2') as HTMLTextAreaElement;
             let textarea3 = document.getElementById('box3') as HTMLTextAreaElement;
@@ -53,18 +53,18 @@ namespace EIA2_Endabgabe {
             let box1_anzahl = document.getElementById('box1_anzahl') as HTMLTextAreaElement;
             let box2_anzahl = document.getElementById('box2_anzahl') as HTMLTextAreaElement;
 
-            // Setzt die Werte für die erste Box
             textarea1.value = flavor1;
             textarea2.value = flavor2;
             textarea3.value = topping[Math.floor(Math.random() * 2)];
             box1_anzahl.value = (Math.floor(Math.random() * 3) + 1).toString();
             box2_anzahl.value = (Math.floor(Math.random() * 3) + 1).toString();
 
-            mood1.value = "wartend"; // Setzt den anfänglichen Stimmungstext und die Farbe
+            mood1.value = "wartend"; 
             mood1.style.color = "#F5A02C";
 
+
         } if (newPosition.x == 1020) {
-            // Ähnliche Logik wie oben für die zweite Box
+            // Stuhl 2
             let textarea4 = document.getElementById('box4') as HTMLTextAreaElement;
             let textarea5 = document.getElementById('box5') as HTMLTextAreaElement;
             let textarea6 = document.getElementById('box6') as HTMLTextAreaElement;
@@ -81,8 +81,9 @@ namespace EIA2_Endabgabe {
             mood2.value = "wartend";
             mood2.style.color = "#F5A02C";
 
+
         } if (newPosition.x == 1470) {
-            // Ähnliche Logik wie oben für die dritte Box
+            // Stuhl 3
             let textarea7 = document.getElementById('box7') as HTMLTextAreaElement;
             let textarea8 = document.getElementById('box8') as HTMLTextAreaElement;
             let textarea9 = document.getElementById('box9') as HTMLTextAreaElement;
@@ -102,14 +103,11 @@ namespace EIA2_Endabgabe {
         }
     }
 
-    // Wird beim Laden der Seite aufgerufen
     window.onload = () => {
-        // Button-Referenzen
         const button1 = document.getElementById('button1') as HTMLButtonElement;
         const button2 = document.getElementById('button2') as HTMLButtonElement;
         const button3 = document.getElementById('button3') as HTMLButtonElement;
 
-        // Textarea-Referenzen für die Vergleichswerte
         let textarea10 = document.getElementById('box10') as HTMLTextAreaElement;
         let textarea11 = document.getElementById('box11') as HTMLTextAreaElement;
         let textarea12 = document.getElementById('box12') as HTMLTextAreaElement;
@@ -117,7 +115,7 @@ namespace EIA2_Endabgabe {
         let box11_anzahl = document.getElementById('box11_anzahl') as HTMLTextAreaElement;
         let earning = document.getElementById('earning') as HTMLTextAreaElement;
 
-        // Event-Listener für Button1
+        // Rückgabe an Kunden zu Stuhl 1
         if (button1) {
             button1.addEventListener('click', () => {
                 let textarea1 = document.getElementById('box1') as HTMLTextAreaElement;
@@ -127,25 +125,25 @@ namespace EIA2_Endabgabe {
                 let box2_anzahl = document.getElementById('box2_anzahl') as HTMLTextAreaElement;
                 let mood1 = document.getElementById('mood1') as HTMLTextAreaElement;
 
-                // Überprüft, ob die Bestellung übereinstimmt
+                // überprüft, ob die Bestellung übereinstimmt
                 if (textarea1.value == textarea10.value && textarea2.value == textarea11.value && textarea3.value == textarea12.value && box1_anzahl.value == box10_anzahl.value && box2_anzahl.value == box11_anzahl.value) {
                     if (textarea1.value !== "") {
                         let customer = getCurrentCustomer();
-                        clearTimeout(customer.removaltimerId_essen); // Stornieren des Essens-Timers, falls vorhanden
-                        mood1.value = "am essen"; // Aktualisiert die Stimmung auf "am essen"
+                        clearTimeout(customer.removaltimerId_essen); // storniert Essens-Timer, falls vorhanden
+                        mood1.value = "am essen"; // Stimmung auf "am essen"
                         mood1.style.color = "#00ff00";
 
-                        // Ändert die Stimmung nach 3 Sekunden auf "bezahlt"
+                        // Stimmung nach 3 Sekunden auf "bezahlt"
                         setTimeout(() => {
                             mood1.value = "bezahlt";
                             mood1.style.color = "#00ff00";
                         }, 3000);
 
-                        // Entfernt den Kunden nach 5 Sekunden und berechnet den Preis
+                        // Kunde verlässt nach 5 Sekunden die Eisdiele, Preis wird berechnet
                         setTimeout(() => {
                             crc2.save();
-                            crc2.clearRect(150 - 60, 220 - 60, 60 * 2, 60 * 2); // Entfernt die Bestellung von der Leinwand
-                            crc2.fillStyle = "#6B502C"; // Hintergrundfarbe für entfernte Bestellung
+                            crc2.clearRect(150 - 60, 220 - 60, 60 * 2, 60 * 2); // Bestellung entfernt
+                            crc2.fillStyle = "#6B502C"; 
                             crc2.fillRect(150 - 60, 220 - 60, 60 * 2, 60 * 2);
                             crc2.fill();
                             crc2.restore();
@@ -157,9 +155,9 @@ namespace EIA2_Endabgabe {
                             let totalPrice = (parseInt(box1_anzahl.value) * flavor1Price) + (parseInt(box2_anzahl.value) * flavor2Price) + toppingPrice;
                             
                             let currentEarning = parseInt(earning.value);
-                            earning.value = (currentEarning + totalPrice).toString(); // Aktualisiert den Gesamtverdienst
+                            earning.value = (currentEarning + totalPrice).toString(); // Gesamtverdienst wird aktualisiert
                             
-                            // Leert die Bestellfelder und setzt die Stimmung zurück
+                            // Bestellfelder werden geleert, setzt die Stimmung zurück
                             textarea1.value = "";
                             textarea2.value = "";
                             textarea3.value = "";
@@ -172,7 +170,7 @@ namespace EIA2_Endabgabe {
             });
         }
 
-        // Event-Listener für Button2
+        // Rückgabe an Kunden zu Stuhl 2
         if (button2) {
             button2.addEventListener('click', () => {
                 let textarea4 = document.getElementById('box4') as HTMLTextAreaElement;
@@ -182,7 +180,7 @@ namespace EIA2_Endabgabe {
                 let box5_anzahl = document.getElementById('box5_anzahl') as HTMLTextAreaElement;
                 let mood2 = document.getElementById('mood2') as HTMLTextAreaElement;
 
-                // Überprüft, ob die Bestellung übereinstimmt
+                // überprüft, ob die Bestellung übereinstimmt
                 if (textarea4.value == textarea10.value && textarea5.value == textarea11.value && textarea6.value == textarea12.value && box4_anzahl.value == box10_anzahl.value && box5_anzahl.value == box11_anzahl.value) {
                     if (textarea4.value !== "") {
                         let customer = getCurrentCustomer();
@@ -197,7 +195,7 @@ namespace EIA2_Endabgabe {
 
                         setTimeout(() => {
                             crc2.save();
-                            crc2.clearRect(1020 - 60, 220 - 60, 60 * 2, 60 * 2); // Entfernt die Bestellung von der Leinwand
+                            crc2.clearRect(1020 - 60, 220 - 60, 60 * 2, 60 * 2); // Bestellung wird entfernt
                             crc2.fillStyle = "#6B502C";
                             crc2.fillRect(1020 - 60, 220 - 60, 60 * 2, 60 * 2);
                             crc2.fill();
@@ -224,7 +222,7 @@ namespace EIA2_Endabgabe {
             });
         }
 
-        // Event-Listener für Button3
+        // Rückgabe an Kunden zu Stuhl 3
         if (button3) {
             button3.addEventListener('click', () => {
                 let textarea7 = document.getElementById('box7') as HTMLTextAreaElement;
@@ -234,7 +232,7 @@ namespace EIA2_Endabgabe {
                 let box8_anzahl = document.getElementById('box8_anzahl') as HTMLTextAreaElement;
                 let mood3 = document.getElementById('mood3') as HTMLTextAreaElement;
 
-                // Überprüft, ob die Bestellung übereinstimmt
+                // überprüft, ob die Bestellung übereinstimmt
                 if (textarea7.value == textarea10.value && textarea8.value == textarea11.value && textarea9.value == textarea12.value && box7_anzahl.value == box10_anzahl.value && box8_anzahl.value == box11_anzahl.value) {
                     if (textarea7.value !== "") {
                         let customer = getCurrentCustomer();
@@ -249,7 +247,7 @@ namespace EIA2_Endabgabe {
 
                         setTimeout(() => {
                             crc2.save();
-                            crc2.clearRect(1470 - 60, 220 - 60, 60 * 2, 60 * 2); // Entfernt die Bestellung von der Leinwand
+                            crc2.clearRect(1470 - 60, 220 - 60, 60 * 2, 60 * 2); // Bestellung wird entfernt
                             crc2.fillStyle = "#6B502C";
                             crc2.fillRect(1470 - 60, 220 - 60, 60 * 2, 60 * 2);
                             crc2.fill();
